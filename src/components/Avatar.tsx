@@ -2,9 +2,17 @@ import * as Avatar from "@radix-ui/react-avatar";
 import { styled } from "@/styles";
 import type { MemberOptions } from "@/types";
 
-function UserAvatar({ user }: { user: MemberOptions }) {
+const noop = () => {};
+
+function UserAvatar({
+  user,
+  updateSelectedUser = noop,
+}: {
+  user: MemberOptions;
+  updateSelectedUser?: (user: MemberOptions) => void;
+}) {
   return (
-    <AvatarRoot>
+    <AvatarRoot onClick={() => updateSelectedUser(user)}>
       <AvatarFallback user={user}>{user}</AvatarFallback>
     </AvatarRoot>
   );

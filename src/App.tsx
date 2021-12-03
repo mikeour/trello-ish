@@ -11,12 +11,13 @@ import {
   getLastUpdated,
   initDummyData,
 } from "@/utils";
-import type { CardData } from "@/types";
+import type { CardData, MemberOptions } from "@/types";
 
 const { cards: dummyCards, columns, members } = initDummyData();
 
 function App() {
   const [cards, setCards] = useState(dummyCards);
+  const [selectedUsers, setSelectedUsers] = useState<MemberOptions[]>([]);
 
   /**
    * Function to handle iterating through cards and updating the card with it's new column
@@ -62,6 +63,16 @@ function App() {
     });
   }, []);
 
+  function updateSelectedUser(user: MemberOptions) {
+    setSelectedUsers((currentUsers) => {
+      if (currentUsers.includes(user)) {
+        return currentUsers.filter((currentUser) => currentUser !== user);
+      } else {
+        return [...currentUsers, user];
+      }
+    });
+  }
+
   return (
     <>
       <Header>
@@ -70,7 +81,7 @@ function App() {
             <Brand />
           </BrandContainer>
         </BrandContents>
-        <Members members={members} />
+        <Members members={members} updateSelectedUser={updateSelectedUser} />
       </Header>
       <OverflowContainer>
         <ColumnsContainer>
@@ -87,9 +98,14 @@ function App() {
                   addCardToColumn={addCardToColumn}
                   updateCardColumn={updateCardColumn}
                 >
-                  {cardsForColumn.map((card) => {
-                    return <Card key={card.id} data={card} />;
-                  })}
+                  {cardsForColumn
+                    .filter((card) => {
+                      if (selectedUsers.length === 0) return true;
+                      return selectedUsers.includes(card.user);
+                    })
+                    .map((card) => {
+                      return <Card key={card.id} data={card} />;
+                    })}
                 </CardColumn>
               );
             })}
