@@ -5,15 +5,22 @@ import type { MemberOptions } from "@/types";
 
 type MembersProps = {
   members: Array<MemberOptions>;
+  updateSelectedUser: (user: MemberOptions) => void;
 };
 
-function Members({ members }: MembersProps) {
+function Members({ members, updateSelectedUser }: MembersProps) {
   return (
     <MembersContainer type="row" gap={1}>
       <MembersText>{members.length} Team Members</MembersText>
       <AvatarList>
         {members.map((member) => {
-          return <Avatar key={member} user={member} />;
+          return (
+            <Avatar
+              key={member}
+              user={member}
+              updateSelectedUser={updateSelectedUser}
+            />
+          );
         })}
       </AvatarList>
     </MembersContainer>

@@ -15,9 +15,11 @@ function Card({ data }: CardProps) {
 
   return (
     <Wrapper key={id} {...dragProps}>
-      <Stack type="column" gap={1}>
+      <Stack type="column" gap={1} css={{ gtc: "minmax(0, 1fr)" }}>
         <CardText>{text}</CardText>
-        <Avatar user={user} />
+        <Stack type="row" gap={0} css={{ justifyContent: "flex-end" }}>
+          <Avatar user={user} />
+        </Stack>
       </Stack>
     </Wrapper>
   );

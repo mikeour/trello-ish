@@ -93,6 +93,7 @@ export function initDummyData() {
 
   const columns: Array<ColumnData> = [
     { id: generateId(), name: "Backlog" },
+    { id: generateId(), name: "To Do" },
     { id: generateId(), name: "In Progress" },
     { id: generateId(), name: "QA" },
     { id: generateId(), name: "Done" },
